@@ -1,0 +1,48 @@
+openapi: 3.0.1
+info:
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: News REST API
+    version: v1
+paths:
+    /news:
+        get:
+            tags:
+                - News
+            operationId: getNews
+            parameters:
+                - name: folderId
+                  in: query
+                  required: true
+                  schema:
+                      type: integer
+                  description: The ID of the folder containing the news content
+            responses:
+                '200':
+                    description: Successfully retrieved news entries
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/NewsEntry'
+                        application/xml:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/NewsEntry'
+components:
+    schemas:
+        NewsEntry:
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                image:
+                    type: string
+                date:
+                    type: string
+                    format: date

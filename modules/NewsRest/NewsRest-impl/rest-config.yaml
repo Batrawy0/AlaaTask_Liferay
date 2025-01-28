@@ -1,0 +1,9 @@
+apiDir: "../NewsRest-api/src/main/java"
+apiPackagePath: "com.batrawy.task"
+application:
+    baseURI: "/NewsRest"
+    className: "NewsRestApplication"
+    name: "NewsRest"
+author: "ahmed"
+#clientDir: "../NewsRest-client/src/main/java"
+#testDir: "../NewsRest-test/src/testIntegration/java"

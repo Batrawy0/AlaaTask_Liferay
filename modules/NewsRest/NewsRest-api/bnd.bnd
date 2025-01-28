@@ -1,0 +1,6 @@
+Bundle-Name: NewsRest-api
+Bundle-SymbolicName: com.batrawy.task.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.batrawy.task.dto.v1,\
+	com.batrawy.task.resource.v1

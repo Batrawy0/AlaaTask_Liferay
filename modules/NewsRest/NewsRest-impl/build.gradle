@@ -1,0 +1,7 @@
+dependencies {
+    api project(":modules:NewsRest:NewsRest-api")
+
+    compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+}
+
+group = "com.batrawy.task"
