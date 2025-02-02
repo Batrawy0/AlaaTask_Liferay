@@ -5,6 +5,7 @@ import com.batrawy.task.resource.v1.NewsResource;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.*;
@@ -82,7 +83,19 @@ public class NewsResourceImpl extends BaseNewsResourceImpl {
         _log.info("Cache MISS for key: " + cacheKey);
 
         Long groupId = JournalFolderLocalServiceUtil.getFolder(folderId).getGroupId();
-        List<JournalArticle> journalArticles = JournalArticleLocalServiceUtil.getArticles(groupId, folderId);
+
+        List<JournalArticle> journalArticles = JournalArticleLocalServiceUtil.getArticles(groupId, folderId)
+                .stream()
+                .map(article -> {
+                    try {
+                        return JournalArticleLocalServiceUtil.getLatestArticle(article.getResourcePrimKey());
+                    } catch (PortalException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+
+        System.out.println("journalArticles: " + journalArticles);
 
 
         List<NewsEntry> newsEntries = journalArticles.stream()
