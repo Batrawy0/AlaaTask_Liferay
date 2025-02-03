@@ -1,7 +1,6 @@
+
 package com.batrawy.task.internal.listener;
 
-import com.batrawy.task.dto.v1.NewsEntry;
-import com.batrawy.task.internal.resource.v1.NewsResourceImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -12,50 +11,50 @@ import com.liferay.portal.kernel.model.ModelListener;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.List;
-import java.util.Set;
-
-
 @Component(
         immediate = true,
         service = ModelListener.class
 )
-
 public class JournalArticleCacheListener extends BaseModelListener<JournalArticle> {
+
+    private static final Log _log = LogFactoryUtil.getLog(JournalArticleCacheListener.class);
+    private static final String CACHE_NAME = "news.rest.cache";
+
+    // Inject the PortalCacheManager service
+    @Reference
+    private PortalCacheManager<String, Object> _portalCacheManager;
 
     @Override
     public void onAfterCreate(JournalArticle journalArticle) {
-        _log.info("Listener: onAfterCreate triggered for article ID " + journalArticle.getId());
-        clearCache(journalArticle);
+        clearCache();
     }
 
     @Override
     public void onAfterUpdate(JournalArticle journalArticle, JournalArticle updatedArticle) {
-        super.onAfterUpdate(journalArticle, updatedArticle);
-        _log.info("Listener: onAfterUpdate triggered for article ID " + journalArticle.getId());
-        clearCache(journalArticle);
+        clearCache();
     }
 
-    private void clearCache(JournalArticle journalArticle) {
-        long folderId = journalArticle.getFolderId();
+    @Override
+    public void onAfterRemove(JournalArticle journalArticle) {
+        clearCache();
+    }
 
-        // Retrieve the cache instance
-        PortalCache<String, List<NewsEntry>> cache = _portalCacheManager.getPortalCache("news.rest.cache");
-
-        // Get all cache keys associated with this folderId
-        Set<String> cacheKeys = NewsResourceImpl.getFolderCacheKeys(folderId);
-        if (cacheKeys != null && !cacheKeys.isEmpty()) {
-            for (String cacheKey : cacheKeys) {
-                cache.remove(cacheKey);
+    /**
+     * Clears the cache used by the News REST module.
+     */
+    private void clearCache() {
+        try {
+            PortalCache<String, ?> cache = _portalCacheManager.getPortalCache(CACHE_NAME);
+            if (cache != null) {
+                cache.removeAll();
+                _log.info("News REST cache cleared successfully.");
             }
-            // Remove the folder's cache keys tracking entry
-            NewsResourceImpl.removeFolderCacheKeys(folderId);
+            else {
+                _log.warn("Cache with name " + CACHE_NAME + " not found.");
+            }
+        }
+        catch (Exception e) {
+            _log.error("Error clearing cache " + CACHE_NAME, e);
         }
     }
-
-    @Reference(target = "(portal.cache.manager.name=com.liferay.portal.kernel.cache.PortalCacheManager)")
-    private PortalCacheManager<String, List<NewsEntry>> _portalCacheManager;
-
-    private static final Log _log = LogFactoryUtil.getLog(NewsResourceImpl.class);
-
 }

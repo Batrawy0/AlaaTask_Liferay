@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -46,21 +45,6 @@ public class NewsResourceImpl extends BaseNewsResourceImpl {
         // Initialize cache with a unique name and TTL (5 minutes = 300 seconds)
         _structuredContentCache = _portalCacheManager.getPortalCache("news.rest.cache");
     }
-
-    //-------------------------------------------------------------------------------
-
-    private static final ConcurrentHashMap<Long, Set<String>> folderCacheKeys = new ConcurrentHashMap<>();
-
-    public static Set<String> getFolderCacheKeys(Long folderId) {
-        return folderCacheKeys.get(folderId);
-    }
-
-    public static void removeFolderCacheKeys(Long folderId) {
-        folderCacheKeys.remove(folderId);
-    }
-
-    //-------------------------------------------------------------------------------
-
 
     @Override
     public Page<NewsEntry> getNews(Integer folderId) throws Exception {
@@ -95,8 +79,6 @@ public class NewsResourceImpl extends BaseNewsResourceImpl {
                 })
                 .collect(Collectors.toList());
 
-        System.out.println("journalArticles: " + journalArticles);
-
 
         List<NewsEntry> newsEntries = journalArticles.stream()
                 .map(journalArticle -> {
@@ -114,11 +96,6 @@ public class NewsResourceImpl extends BaseNewsResourceImpl {
                     Node imageNode = rootEle.selectSingleNode("/root/dynamic-element[@name='Image12152576']/dynamic-content");
                     Node descriptionNode = rootEle.selectSingleNode("/root/dynamic-element[@name='Text45263915']/dynamic-content");
 
-                    _log.info("Title: " + titleNode.getText());
-                    _log.info("Date: " + dateNode.getText());
-                    _log.info("Image: " + imageNode.getText());
-                    _log.info("Description: " + descriptionNode.getText());
-
 
                     newsEntry.setTitle(titleNode.getText()); // Set title
                     newsEntry.setDescription(descriptionNode.getText());
@@ -134,16 +111,6 @@ public class NewsResourceImpl extends BaseNewsResourceImpl {
         _structuredContentCache.put(cacheKey, newsEntries, 300);
         _log.info("Cached data for key: " + cacheKey);
 
-
-        // -------------------------------------------------------------
-        folderCacheKeys.compute(folderId.longValue(), (key, set) -> {
-            if (set == null) {
-                set = ConcurrentHashMap.newKeySet();
-            }
-            set.add(cacheKey);
-            return set;
-        });
-        // -------------------------------------------------------------
 
         return Page.of(newsEntries);
     }
