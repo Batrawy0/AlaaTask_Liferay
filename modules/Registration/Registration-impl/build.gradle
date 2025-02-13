@@ -1,0 +1,16 @@
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	api project(":modules:Registration:Registration-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+
+	// TOTP (Google Authenticator) library:
+	compileInclude 'com.google.zxing:core:3.5.2'
+	compileInclude 'com.google.zxing:javase:3.5.2'
+	compileInclude 'com.warrenstrange:googleauth:1.4.0'
+}
+
+group = "com.batrawy.task.register"

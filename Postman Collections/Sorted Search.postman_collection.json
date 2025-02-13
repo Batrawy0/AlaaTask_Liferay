@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "56b32f7b-1bda-4b5d-a6d8-00afa6db0979",
+		"name": "Sorted Search",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33386016",
+		"_collection_link": "https://amadeus-9694.postman.co/workspace/amadeus-Workspace~1e9f10f2-6b47-4533-b96a-5a8fd22ad61f/collection/33386016-56b32f7b-1bda-4b5d-a6d8-00afa6db0979?action=share&source=collection_link&creator=33386016"
+	},
+	"item": [
+		{
+			"name": "Custom sorted search API",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "test",
+						"username": "test@liferay.com"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/o/NewsRest/v1/news?folderId=32803",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"o",
+						"NewsRest",
+						"v1",
+						"news"
+					],
+					"query": [
+						{
+							"key": "folderId",
+							"value": "32803"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create web content API",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "test",
+						"username": "test@liferay.com"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic [base64-credentials]"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"contentStructureId\": 32114,\r\n  \"structuredContentFolderId\": 32803,\r\n  \"title\": \"Sample News Entry\",\r\n  \"title_i18n\": {\r\n        \"en-US\": \"Sample News Entry\"\r\n    },\r\n  \"contentFields\": [\r\n    {\r\n      \"name\": \"customTitle\",\r\n      \"contentFieldValue\": { \"data\": \"Breaking News Headline\" },\r\n            \"contentFieldValue_i18n\": {\r\n                \"en-US\": {\"data\": \"Breaking News Headline\"}\r\n            }\r\n    },\r\n    {\r\n      \"name\": \"customDescription\",\r\n      \"contentFieldValue\": { \"data\": \"This is a detailed description of the breaking news\" },\r\n            \"contentFieldValue_i18n\": {\r\n                \"en-US\": {\"data\": \"This is a detailed description of the breaking news\"}\r\n            }\r\n    },\r\n    {\r\n      \"name\": \"customImage\",\r\n      \"contentFieldValue\": {\r\n                \"image\": {\"id\": 32125}\r\n            },\r\n            \"contentFieldValue_i18n\": {\r\n                \"en-US\": {\"image\": {\"id\": 32125}}\r\n            }\r\n        },\r\n    {\r\n      \"name\": \"customDate\",\r\n      \"contentFieldValue\": { \"data\": \"2020-01-17T00:00:00Z\" },\r\n            \"contentFieldValue_i18n\": {\r\n                \"en-US\": {\"data\": \"2020-01-17T00:00:00Z\"}\r\n            }\r\n    }\r\n  ],\r\n  \"description\": \"Detailed news content.\",\r\n  \"datePublished\": \"2025-01-28T01:11:10.105Z\",\r\n  \"viewableBy\": \"Anyone\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/o/headless-delivery/v1.0/sites/20117/structured-contents"
+			},
+			"response": []
+		}
+	]
+}

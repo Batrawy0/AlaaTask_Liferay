@@ -1,0 +1,6 @@
+Bundle-Name: CustomLogin-api
+Bundle-SymbolicName: com.batrawy.task.login.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.batrawy.task.login.dto.v1,\
+	com.batrawy.task.login.resource.v1

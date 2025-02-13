@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "8a44e668-d0f2-4a39-9e7a-c7258b53a294",
+		"name": "Registration & Login",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33386016",
+		"_collection_link": "https://amadeus-9694.postman.co/workspace/amadeus-Workspace~1e9f10f2-6b47-4533-b96a-5a8fd22ad61f/collection/33386016-8a44e668-d0f2-4a39-9e7a-c7258b53a294?action=share&source=collection_link&creator=33386016"
+	},
+	"item": [
+		{
+			"name": "Built-in Regester API",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "test",
+						"username": "test@liferay.com"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"alternateName\": \"TestUser00\",\r\n  \"emailAddress\": \"testuser00@example.com\",\r\n  \"familyName\": \"User\",\r\n  \"givenName\": \"Test\",\r\n  \"password\": \"secret\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/o/headless-admin-user/v1.0/user-accounts"
+			},
+			"response": []
+		},
+		{
+			"name": "Custom Regester API",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "test",
+						"username": "test@liferay.com"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"emailAddress\": \"liferayauth1@liferay.com\",\r\n    \"firstName\": \"Alaa\",\r\n    \"lastName\": \"Medhat\",\r\n    \"password\": \"secret\",\r\n    \"identityType\": \"individual\",\r\n    \"identityNumber\": \"1236547896\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/o/Registration/v1/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Built-in Login API",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "testuser12@testing.com",
+						"password": "secret"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/o/headless-admin-user/v1.0/my-user-account"
+			},
+			"response": []
+		},
+		{
+			"name": "Custom Login API",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "test",
+						"username": "test@liferay.com"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"emailAddress\": \"liferayauth1@liferay.com\",\r\n    \"password\": \"secret\",\r\n    \"totpCode\": \"105410\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/o/customlogin/v1/login"
+			},
+			"response": []
+		}
+	]
+}

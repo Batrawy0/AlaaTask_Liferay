@@ -1,0 +1,7 @@
+apiDir: "../CustomLogin-api/src/main/java"
+apiPackagePath: "com.batrawy.task.login"
+application:
+    baseURI: "/customlogin"
+    className: "CustomLoginApplication"
+    name: "CustomLogin"
+author: "ahmed"

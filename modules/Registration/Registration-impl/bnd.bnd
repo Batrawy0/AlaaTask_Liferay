@@ -1,0 +1,3 @@
+Bundle-Name: Registration-impl
+Bundle-SymbolicName: com.batrawy.task.register.impl
+Bundle-Version: 1.0.0

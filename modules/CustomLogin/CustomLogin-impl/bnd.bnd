@@ -1,0 +1,3 @@
+Bundle-Name: CustomLogin-impl
+Bundle-SymbolicName: com.batrawy.task.login.impl
+Bundle-Version: 1.0.0

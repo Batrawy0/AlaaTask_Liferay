@@ -1,0 +1,13 @@
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	api project(":modules:CustomLogin:CustomLogin-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+
+	compileInclude 'com.warrenstrange:googleauth:1.4.0'
+}
+
+group = "com.batrawy.task.login"

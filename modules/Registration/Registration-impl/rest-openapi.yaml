@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: Registration
+    version: v1
+paths:
+    /register:
+        post:
+            summary: "Register a new user with extra identity fields and OTP verification"
+            tags:
+                - Registration
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/RegistrationRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/RegistrationRequest"
+            responses:
+                '200':
+                    description: "Registration successful"
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/RegistrationResponse"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/RegistrationResponse"
+                '400':
+                    description: "Validation error"
+components:
+    schemas:
+        RegistrationRequest:
+            type: object
+            properties:
+                emailAddress:
+                    type: string
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                password:
+                    type: string
+                identityType:
+                    type: string
+                identityNumber:
+                    type: string
+            required:
+                - emailAddress
+                - firstName
+                - lastName
+                - password
+                - identityType
+                - identityNumber
+        RegistrationResponse:
+            type: object
+            properties:
+                userId:
+                    type: integer
+                screenName:
+                    type: string
+                statusCode:
+                    type: integer
+                statusMessage:
+                    type: string

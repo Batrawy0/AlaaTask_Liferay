@@ -1,0 +1,6 @@
+Bundle-Name: Registration-api
+Bundle-SymbolicName: com.batrawy.task.register.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.batrawy.task.register.dto.v1,\
+	com.batrawy.task.register.resource.v1

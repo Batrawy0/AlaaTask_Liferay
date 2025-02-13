@@ -1,0 +1,7 @@
+apiDir: "../Registration-api/src/main/java"
+apiPackagePath: "com.batrawy.task.register"
+application:
+    baseURI: "/Registration"
+    className: "RegistrationApplication"
+    name: "Registration"
+author: "ahmed"
