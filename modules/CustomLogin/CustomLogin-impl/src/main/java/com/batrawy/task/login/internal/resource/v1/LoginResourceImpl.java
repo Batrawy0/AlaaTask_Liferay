@@ -3,6 +3,8 @@ package com.batrawy.task.login.internal.resource.v1;
 import com.batrawy.task.login.dto.v1.LoginRequest;
 import com.batrawy.task.login.dto.v1.LoginResponse;
 import com.batrawy.task.login.resource.v1.LoginResource;
+import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -20,9 +22,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
-/**
- * @author ahmed
- */
 @Component(
         properties = "OSGI-INF/liferay/rest/v1/login.properties",
         scope = ServiceScope.PROTOTYPE, service = LoginResource.class
@@ -54,7 +53,15 @@ public class LoginResourceImpl extends BaseLoginResourceImpl {
         }
 
         // Retrieve stored TOTP secret from the Expando field
-        String storedTotpSecret = (String) user.getExpandoBridge().getAttribute("TOTPSecret");
+//        String storedTotpSecret = (String) user.getExpandoBridge().getAttribute("TOTPSecret");
+        ExpandoValue totpSecret = ExpandoValueLocalServiceUtil.getValue(
+                user.getCompanyId(),
+                User.class.getName(),
+                "CUSTOM_FIELDS",
+                "TOTPSecret",
+                user.getUserId()
+        );
+        String storedTotpSecret = totpSecret.getData();
         if (Validator.isNull(storedTotpSecret)) {
             loginResponse.setStatusCode(400);
             loginResponse.setStatusMessage("User has not enabled 2FA.");

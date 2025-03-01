@@ -124,8 +124,8 @@ public class RegistrationResourceImpl extends BaseRegistrationResourceImpl {
 
 
         // Set custom Expando attributes (IdentityType and IdentityNumber)
-        user.getExpandoBridge().setAttribute("IdentityType", registrationRequest.getIdentityType().toString());
-        user.getExpandoBridge().setAttribute("IdentityNumber", registrationRequest.getIdentityNumber().toString());
+        user.getExpandoBridge().setAttribute("IdentityType", registrationRequest.getIdentityType());
+        user.getExpandoBridge().setAttribute("IdentityNumber", registrationRequest.getIdentityNumber());
 
 
         // Set the user's agreedToTermsOfUse flag to true
