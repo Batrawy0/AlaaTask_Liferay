@@ -42,7 +42,8 @@ public interface NewsResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<NewsEntry> getNews(Integer folderId) throws Exception;
+	public Page<NewsEntry> getNews(Integer folderId, String sortType)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

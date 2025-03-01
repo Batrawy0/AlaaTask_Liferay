@@ -48,6 +48,10 @@ public abstract class BaseNewsResourceImpl implements NewsResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "folderId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sortType"
 			)
 		}
 	)
@@ -62,7 +66,10 @@ public abstract class BaseNewsResourceImpl implements NewsResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.QueryParam("folderId")
-			Integer folderId)
+			Integer folderId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("sortType")
+			String sortType)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

@@ -40,6 +40,7 @@ public class NewsResourceImpl extends BaseNewsResourceImpl {
     @Reference
     private PortalCacheManager<String, List<NewsEntry>> _portalCacheManager;
 
+    //read
     @Activate
     public void activate() {
         // Initialize cache with a unique name and TTL (5 minutes = 300 seconds)
@@ -47,15 +48,18 @@ public class NewsResourceImpl extends BaseNewsResourceImpl {
     }
 
     @Override
-    public Page<NewsEntry> getNews(Integer folderId) throws Exception {
+    public Page<NewsEntry> getNews(Integer folderId, String sortType) throws Exception {
         if (folderId == null) {
             throw new IllegalArgumentException("folderId cannot be null");
+        }
+        if (sortType == null) {
+            throw new IllegalArgumentException("sortType cannot be null");
         }
 
 
         Locale preferredLocale = contextAcceptLanguage.getPreferredLocale();
         // set cache key
-        String cacheKey = folderId + "_" + preferredLocale.toLanguageTag();
+        String cacheKey = folderId + "_" + preferredLocale.toLanguageTag() + "_" + sortType;
 
 
         // Check cache first
@@ -104,8 +108,19 @@ public class NewsResourceImpl extends BaseNewsResourceImpl {
 
                     return newsEntry;
                 })
-                .sorted(Comparator.comparing(NewsEntry::getDate))
                 .collect(Collectors.toList());
+
+        if ("desc".equalsIgnoreCase(sortType)) {
+            newsEntries = newsEntries.stream()
+                    .sorted(Comparator.comparing(NewsEntry::getDate).reversed())
+                    .collect(Collectors.toList());
+        } else {
+            // Default to ascending if "asc" or any other valid value
+            newsEntries = newsEntries.stream()
+                    .sorted(Comparator.comparing(NewsEntry::getDate))
+                    .collect(Collectors.toList());
+        }
+
 
         // Store in cache with 5 minutes
         _structuredContentCache.put(cacheKey, newsEntries, 300);

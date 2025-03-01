@@ -18,6 +18,12 @@ paths:
                   schema:
                       type: integer
                   description: The ID of the folder containing the news content
+                - name: sortType
+                  in: query
+                  required: false
+                  schema:
+                      type: string
+                  description: The sorting type
             responses:
                 '200':
                     description: Successfully retrieved news entries
