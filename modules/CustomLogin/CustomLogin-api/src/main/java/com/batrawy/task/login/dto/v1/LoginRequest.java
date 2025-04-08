@@ -46,6 +46,34 @@ public class LoginRequest implements Serializable {
 	}
 
 	@Schema
+	public String getCaptchaResponse() {
+		return captchaResponse;
+	}
+
+	public void setCaptchaResponse(String captchaResponse) {
+		this.captchaResponse = captchaResponse;
+	}
+
+	@JsonIgnore
+	public void setCaptchaResponse(
+		UnsafeSupplier<String, Exception> captchaResponseUnsafeSupplier) {
+
+		try {
+			captchaResponse = captchaResponseUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String captchaResponse;
+
+	@Schema
 	public String getEmailAddress() {
 		return emailAddress;
 	}
@@ -158,6 +186,20 @@ public class LoginRequest implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (captchaResponse != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"captchaResponse\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(captchaResponse));
+
+			sb.append("\"");
+		}
 
 		if (emailAddress != null) {
 			if (sb.length() > 1) {

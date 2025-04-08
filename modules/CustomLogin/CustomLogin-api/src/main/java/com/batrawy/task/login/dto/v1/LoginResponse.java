@@ -43,6 +43,34 @@ public class LoginResponse implements Serializable {
 	}
 
 	@Schema
+	public Boolean getRequireCaptcha() {
+		return requireCaptcha;
+	}
+
+	public void setRequireCaptcha(Boolean requireCaptcha) {
+		this.requireCaptcha = requireCaptcha;
+	}
+
+	@JsonIgnore
+	public void setRequireCaptcha(
+		UnsafeSupplier<Boolean, Exception> requireCaptchaUnsafeSupplier) {
+
+		try {
+			requireCaptcha = requireCaptchaUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean requireCaptcha;
+
+	@Schema
 	public String getScreenName() {
 		return screenName;
 	}
@@ -180,6 +208,16 @@ public class LoginResponse implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (requireCaptcha != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"requireCaptcha\": ");
+
+			sb.append(requireCaptcha);
+		}
 
 		if (screenName != null) {
 			if (sb.length() > 1) {
