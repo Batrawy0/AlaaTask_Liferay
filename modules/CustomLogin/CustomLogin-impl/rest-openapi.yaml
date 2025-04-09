@@ -43,6 +43,8 @@ components:
                     type: string
                 totpCode:
                     type: string
+                captchaResponse:
+                    type: string
             required:
                 - emailAddress
                 - password
@@ -58,3 +60,5 @@ components:
                     type: integer
                 statusMessage:
                     type: string
+                requireCaptcha:
+                    type: boolean

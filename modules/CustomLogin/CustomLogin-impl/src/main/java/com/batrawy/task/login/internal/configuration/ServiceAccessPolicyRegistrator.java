@@ -39,7 +39,8 @@ public class ServiceAccessPolicyRegistrator {
             long userId = 20123;
             String allowedServiceSignatures =
                     "com.batrawy.task.login.internal.resource.v1.LoginResourceImpl#postLogin\n" +
-                            "com.batrawy.task.register.internal.resource.v1.RegistrationResourceImpl#postRegister";
+                            "com.batrawy.task.register.internal.resource.v1.RegistrationResourceImpl#postRegister\n"+
+                                "com.batrawy.task.login.internal.auth.LiferayBasicAuthStrategy#authenticate";
             boolean defaultSAPEntry = true;
             boolean enabled = true;
             String name = "LOGIN_REGISTER_SAP";

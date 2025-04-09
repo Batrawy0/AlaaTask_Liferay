@@ -41,7 +41,7 @@ public abstract class BaseLoginResourceImpl implements LoginResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/customlogin/v1/login' -d $'{"emailAddress": ___, "password": ___, "totpCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/customlogin/v1/login' -d $'{"captchaResponse": ___, "emailAddress": ___, "password": ___, "totpCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Login")}
@@ -58,7 +58,7 @@ public abstract class BaseLoginResourceImpl implements LoginResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/customlogin/v1/login/batch' -d $'{"emailAddress": ___, "password": ___, "totpCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/customlogin/v1/login/batch' -d $'{"captchaResponse": ___, "emailAddress": ___, "password": ___, "totpCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
