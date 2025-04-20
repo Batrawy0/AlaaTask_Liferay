@@ -194,20 +194,20 @@ public abstract class BaseLoginResourceImpl implements LoginResource {
 		return TransformUtil.transform(collection, unsafeFunction);
 	}
 
-	protected <T, R> R[] transform(
+/*	protected <T, R> R[] transform(
 		T[] array, UnsafeFunction<T, R, Exception> unsafeFunction,
-		Class<R> clazz) {
+		Class<?> clazz) {
 
 		return TransformUtil.transform(array, unsafeFunction, clazz);
 	}
 
 	protected <T, R> R[] transformToArray(
 		java.util.Collection<T> collection,
-		UnsafeFunction<T, R, Exception> unsafeFunction, Class<R> clazz) {
+		UnsafeFunction<T, R, Exception> unsafeFunction, Class<?> clazz) {
 
 		return TransformUtil.transformToArray(
 			collection, unsafeFunction, clazz);
-	}
+	}*/
 
 	protected <T, R> List<R> transformToList(
 		T[] array, UnsafeFunction<T, R, Exception> unsafeFunction) {
